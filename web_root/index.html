@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Open City Database | Frontend</title>
+    <base href="/v1/">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+    <link href="frontend/style.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="frontend/index.js"></script>
+</head>
+<body>
+<h1>Open City Database | Frontend</h1>
+<div class="loginPane">
+	<span>Application Provider Login</span>
+	<form action="login" method="GET">
+		<input type="email" name="email" placeholder="user@domain.de" required>
+		<input type="password" name="password" placeholder="OCDB Password!" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})"> 
+		<input class="submitButton" type="submit" value="login">
+	</form>
+</div>
+<div class="registerPane">
+	<span>Application Provider Registration</span>
+	<form action="register" method="GET">
+		<input type="text" name="name" placeholder="name" required>
+		<input type="email" name="email" placeholder="user@domain.de" required>
+		<input type="password" name="password" placeholder="OCDB Password!" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})">
+		<input type="password" name="repassword" placeholder="retype password" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})">
+		<input class="submitButton" type="submit" value="register">
+		<span>password pattern: must contain at least one digit from 0-9, one lowercase and one uppercase character a-z, one special symbol and have a length from 6 to 20.</span>
+	</form>
+</div>
+</body>
+</html>

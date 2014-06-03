@@ -1,0 +1,30 @@
+{
+  "name": "ocdb",
+  "description": "Open City Database",
+  "version": "0.1.0",
+  "author": "Martin Lasak <martin.lasak@fokus.fraunhofer.de>",
+  "dependencies": {
+    "express": "4.x.x",
+    "body-parser" : "1.0.0",
+    "mongoose": "3.8.x",
+    "underscore": "1.6.x"
+  },
+  "devDependencies": {
+  },
+  "keywords": [
+    "open",
+    "city",
+    "database",
+    "web",
+    "rest",
+    "api"
+  ],
+  "repository": "git://github.com/fraunhoferfokus/ocdb",
+  "scripts": {
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "main": "./main.js",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0"
+}
