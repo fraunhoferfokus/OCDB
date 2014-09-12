@@ -1,4 +1,4 @@
-var loginForm, registerForm;
+var loginForm, logoutForm, registerForm, authZ;
 
 window.onload=function(){
 	var forms = document.querySelectorAll("form");
@@ -8,6 +8,10 @@ window.onload=function(){
 			loginForm=forms[s];
 			loginForm.onsubmit=loginHandler;
 		}
+		if(action && action.indexOf("logout")!==-1){
+			logoutForm=forms[s];
+			logoutForm.onsubmit=logoutHandler;
+		}
 		if(action && action.indexOf("register")!==-1){
 			registerForm=forms[s];
 			registerForm.onsubmit=registerHandler;
@@ -16,12 +20,15 @@ window.onload=function(){
 }
 
 var loginHandler = function(){
-	var email = loginForm.querySelector('input[name="email"]').value;
+	var email = SHA1(loginForm.querySelector('input[name="email"]').value);
 	var password = SHA1(loginForm.querySelector('input[name="password"]').value);
+	sendRequest("users?a="+email+"&b="+password,loginRequestHandler,null,authZ);
+	return false;
+};
 
-	console.log("login: ",email,password);
-
-	sendRequest("users?login=1",loginRequestHandler,{email:email,password:password});
+var logoutHandler = function(){
+	if (authZ) sendRequest("users?a=&b=",logoutRequestHandler,null,authZ);
+	authZ = undefined;
 	return false;
 };
 
@@ -31,19 +38,24 @@ var registerHandler = function(){
 	var password = SHA1(registerForm.querySelector('input[name="password"]').value);
 	var password2 = SHA1(registerForm.querySelector('input[name="repassword"]').value);
 
-	console.log("registering: ",name,email,password,password2);
-
 	if(password!==password2){
 		registerForm.querySelector('input[name="repassword"]').value="";
 		registerForm.querySelector('input[name="repassword"]').setAttribute("placeholder","passwords do not match!");
 		return false;
 	}
 
-	sendRequest("users?register=1",registerRequestHandler,{name:name,email:email,password:password,role:"provider"});
+	sendRequest("users",registerRequestHandler,{n:name,a:email,b:password},authZ);
 	return false;
 };
 
 var loginRequestHandler = function(err,response){
+	console.log(err,response);
+	if(response.access_token){
+		authZ = response.access_token;
+	}
+}
+
+var logoutRequestHandler = function(err,response){
 	console.log(err,response);
 }
 

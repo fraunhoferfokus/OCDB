@@ -17,19 +17,27 @@
 	<span>Application Provider Login</span>
 	<form action="login" method="GET">
 		<input type="email" name="email" placeholder="user@domain.de" required>
-		<input type="password" name="password" placeholder="OCDB Password!" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})"> 
+		<input type="password" name="password" placeholder="OCDB Password!" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"> 
 		<input class="submitButton" type="submit" value="login">
 	</form>
 </div>
+
+<div class="logoutPane">
+	<span>Application Provider Logout</span>
+	<form action="logout" method="GET">
+		<input class="submitButton" type="submit" value="logout">
+	</form>
+</div>
+
 <div class="registerPane">
 	<span>Application Provider Registration</span>
 	<form action="register" method="GET">
 		<input type="text" name="name" placeholder="name" required>
 		<input type="email" name="email" placeholder="user@domain.de" required>
-		<input type="password" name="password" placeholder="OCDB Password!" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})">
-		<input type="password" name="repassword" placeholder="retype password" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})">
+		<input type="password" name="password" placeholder="OCDB Password!" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+		<input type="password" name="repassword" placeholder="retype password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
 		<input class="submitButton" type="submit" value="register">
-		<span>password pattern: must contain at least one digit from 0-9, one lowercase and one uppercase character a-z, one special symbol and have a length from 6 to 20.</span>
+		<span>password: must contain at least one digit, one lowercase and one uppercase character and must be 6 characters at minimum.</span>
 	</form>
 </div>
 </body>
