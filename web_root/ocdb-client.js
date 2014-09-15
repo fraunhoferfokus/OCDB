@@ -53,6 +53,7 @@ var OCDBBASEURL = "https://localhost/v1/";
         var url = OCDBBASEURL+"pois/"+poiid+"/comment?q=1";
         var body = {};
         if(options.lat && options.lon) body.coords = [options.lon, options.lat];
+        if(options.comment) body.comment = options.comment;
         sendRequest(url,cb,body);
     };
 
@@ -60,6 +61,7 @@ var OCDBBASEURL = "https://localhost/v1/";
         var url = OCDBBASEURL+"pois/"+poiid+"/like?q=1";
         var body = {};
         if(options.lat && options.lon) body.coords = [options.lon, options.lat];
+        if(typeof options.like === "boolean") body.like = options.like;
         sendRequest(url,cb,body);
     };
 
@@ -67,6 +69,7 @@ var OCDBBASEURL = "https://localhost/v1/";
         var url = OCDBBASEURL+"pois/"+poiid+"/rating?q=1";
         var body = {};
         if(options.lat && options.lon) body.coords = [options.lon, options.lat];
+        if(typeof options.rating === "number") body.rating = options.rating;
         sendRequest(url,cb,body);
     };
 
