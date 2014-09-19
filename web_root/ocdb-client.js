@@ -99,7 +99,7 @@ var OCDBBASEURL = "https://localhost/v1/";
         sendRequest(url,cb,media);
     };
 
-    var authZ = false;
+    var authZ = false, uid = null;
 
     var login = function(email, password, cb){
         if(!email || !password) {
@@ -109,9 +109,11 @@ var OCDBBASEURL = "https://localhost/v1/";
         var url = OCDBBASEURL+"users?a="+email+"&b="+password;
         sendRequest(url,function(e,r){
             if(e || !r || !r.access_token){
-              authZ = false;  
+              authZ = false;
+              uid = null;
             } else {
-              authZ = r.access_token
+              authZ = r.access_token;
+              uid = r.uid;
             }
             cb(e,r);
         });
@@ -119,6 +121,10 @@ var OCDBBASEURL = "https://localhost/v1/";
 
     var setAuthZ = function(_authZ){
         authZ = _authZ;
+    }
+
+    var getUid = function(){
+        return uid;
     }
 
     var logout = function(cb){
@@ -185,7 +191,8 @@ var OCDBBASEURL = "https://localhost/v1/";
         login:login,
         setAuthZ:setAuthZ,
         logout:logout,
-        register:register
+        register:register,
+        getUid:getUid
     }
 
     //XHR Tools
