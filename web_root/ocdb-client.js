@@ -119,6 +119,20 @@ var OCDBBASEURL = "https://localhost/v1/";
         });
     };
 
+    var setAttributes = function(appPrefix, attributes, cb){
+        if(!appPrefix || !attributes) {
+            cb(404,{});
+            return;
+        }
+        var url = OCDBBASEURL+"users";
+        sendRequest(url,cb,{p:appPrefix, r:attributes});
+    }
+
+    var getAttributes = function(appPrefix, cb){
+        var url = OCDBBASEURL+"users?p="+appPrefix;
+        sendRequest(url,cb);
+    }
+
     var setAuthZ = function(_authZ){
         authZ = _authZ;
     }
@@ -131,7 +145,7 @@ var OCDBBASEURL = "https://localhost/v1/";
         var url = OCDBBASEURL+"users?a=&b=";
         sendRequest(url,function(e,r){
             if(!e && r){
-              authZ = false;  
+              authZ = false;
             }
             cb(e,r);
         });
@@ -149,14 +163,14 @@ var OCDBBASEURL = "https://localhost/v1/";
     var distinctLocations = function(l1, l2){
         if(!l1 || !l2) return true;
         //roughly check if new location is much different than the one we already know
-        var R = 6371; 
-        var dLat = (l2.coords.latitude-l1.coords.latitude)*(Math.PI/180);  
-        var dLon = (l2.coords.longitude-l1.coords.longitude)*(Math.PI/180); 
-        var a = 
+        var R = 6371;
+        var dLat = (l2.coords.latitude-l1.coords.latitude)*(Math.PI/180);
+        var dLon = (l2.coords.longitude-l1.coords.longitude)*(Math.PI/180);
+        var a =
         Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos((Math.PI/180)*(l1.coords.latitude)) * Math.cos((Math.PI/180)*(l2.coords.latitude)) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2); 
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        Math.cos((Math.PI/180)*(l1.coords.latitude)) * Math.cos((Math.PI/180)*(l2.coords.latitude)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         var d = R * c; // Distance in km
         return d>0.1;
     };
@@ -192,7 +206,9 @@ var OCDBBASEURL = "https://localhost/v1/";
         setAuthZ:setAuthZ,
         logout:logout,
         register:register,
-        getUid:getUid
+        getUid:getUid,
+        getAttributes:getAttributes,
+        setAttributes:setAttributes
     }
 
     //XHR Tools
