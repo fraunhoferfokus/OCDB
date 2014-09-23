@@ -8,7 +8,8 @@
     "body-parser" : "1.0.0",
     "mongoose": "3.8.x",
     "underscore": "1.6.x",
-    "node-uuid": "1.4.x"
+    "node-uuid": "1.4.x",
+    "minimist": "1.1.x"
   },
   "devDependencies": {
   },
