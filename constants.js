@@ -14,7 +14,7 @@
  *
  * Copyright 2014 Fraunhofer FOKUS
  *******************************************************************************/
- 
+
 module.exports = {
 	CERTIFICATE_LOCATION : "~/.ocdb/",
 	REQUIRED_MIMETYPE : "application/json",
@@ -23,7 +23,7 @@ module.exports = {
 	SERVER_PORT : 443,
 	BASEURL_PATH : "/",
 	API_VERSION : "v1",
-	SESSION_LEASE : 900000,
+	SESSION_LEASE : 43200000,
 	ERROR_OK : "ok",
 	ERROR_WRONG_MIMETYPE : "wrong_mimetype",
 	ERROR_METHOD_NOT_ALLOWED : "method_not_allowed",
