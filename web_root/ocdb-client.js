@@ -1,5 +1,10 @@
 //var OCDBBASEURL = "///"+location.host+"/v1/";
-var OCDBBASEURL = "https://localhost/v1/";
+var OCDBHOST = "localhost";
+if(document.location.hash && document.location.hash.split("#ocdb=")[1]){
+ OCDBHOST = document.location.hash.split("#ocdb=")[1];
+}
+
+var OCDBBASEURL = "https://"+OCDBHOST+"/v1/";
 
 //ocdb related
 (function(){
@@ -34,6 +39,7 @@ var OCDBBASEURL = "https://localhost/v1/";
         if(options.lon) url+="&lon="+options.lon;
         if(options.offset) url+="&offset="+options.offset;
         if(options.limit) url+="&limit="+options.limit;
+        if(options.expand) url+="&expand="+options.expand;
         sendRequest(url,cb,0);
     };
 
