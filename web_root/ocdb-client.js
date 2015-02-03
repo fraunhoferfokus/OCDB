@@ -63,6 +63,13 @@ var OCDBBASEURL = "https://"+OCDBHOST+"/v1/";
         sendRequest(url,cb,body);
     };
 
+    var getPoiComments = function(poiid, options, cb){
+        var url = OCDBBASEURL+"pois/"+poiid+"/comment?q=1";
+        if(options.offset) url+="&offset="+options.offset;
+        if(options.limit) url+="&limit="+options.limit;
+        sendRequest(url,cb,0);
+    };
+
     var likePoi = function(poiid, options, cb){
         var url = OCDBBASEURL+"pois/"+poiid+"/like?q=1";
         var body = {};
@@ -195,6 +202,7 @@ var OCDBBASEURL = "https://"+OCDBHOST+"/v1/";
     };
     window.ocdb.poi = {
         get:getPoi,
+        getComments:getPoiComments,
         checkin:checkinPoi,
         comment:commentPoi,
         like:likePoi,
