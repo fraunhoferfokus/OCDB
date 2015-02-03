@@ -230,7 +230,11 @@ var OCDBBASEURL = "https://"+OCDBHOST+"/v1/";
             req.setRequestHeader('Content-type','application/json');
         req.onreadystatechange = function () {
             if (req.readyState != 4) return;
-            if (req.status == 401) setAuthZ(false);
+            if (req.status == 401) {
+                setAuthZ(false);
+                //force app to reload in case of unauthorized access
+                location.reload();
+            }
             try{
                 if (req.status != 200 && req.status != 304) {
                     callback(req.status?req.status:"error",JSON.parse(req.responseText));
