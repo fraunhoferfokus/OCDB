@@ -3,43 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Open City Database | Frontend</title>
-    <base href="/v1/">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keywords" content="">
 
-    <link href="frontend/style.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="frontend/ocdb-client.js"></script>
-    <script type="text/javascript" src="frontend/index.js"></script>
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="css/jquery.dataTables.css" type="text/css" rel="stylesheet">
+
+    <script type="text/javascript" src="ocdb-client.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jquery.dataTables.js"></script>
+    <script type="text/javascript" src="index.js"></script>
 </head>
 <body>
 <h1>Open City Database | Frontend</h1>
+<h3>Interface for Application Providers and Users</h3>
 <div class="loginPane">
-	<span>Application Provider Login</span>
+	<span>Login</span>
 	<form action="login" method="GET">
-		<input type="email" name="email" placeholder="user@domain.de" required>
-		<input type="password" name="password" placeholder="OCDB Password!" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"> 
+		<input type="text" name="email" placeholder="user@domain.de or username" required>
+		<input type="password" name="password" placeholder="OCDB Password!" required >
+    <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" -->
 		<input class="submitButton" type="submit" value="login">
 	</form>
 </div>
 
 <div class="logoutPane">
-	<span>Application Provider Logout</span>
+	<span>Logout</span>
 	<form action="logout" method="GET">
 		<input class="submitButton" type="submit" value="logout">
 	</form>
 </div>
 
 <div class="registerPane">
-	<span>Application Provider Registration</span>
+	<span>Registration</span>
 	<form action="register" method="GET">
-		<input type="text" name="name" placeholder="name" required>
+		<input type="text" name="name" placeholder="user name" required>
 		<input type="email" name="email" placeholder="user@domain.de" required>
-		<input type="password" name="password" placeholder="OCDB Password!" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
-		<input type="password" name="repassword" placeholder="retype password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+		<input type="password" name="password" placeholder="OCDB Password!" required >
+    <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" -->
+		<input type="password" name="repassword" placeholder="retype password" required >
+    <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" -->
 		<input class="submitButton" type="submit" value="register">
 		<span>password: must contain at least one digit, one lowercase and one uppercase character and must be 6 characters at minimum.</span>
 	</form>
 </div>
+
+<hr>
+<h3>City List</h3>
+<table id="cities" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>City ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+</table>
+
+</div>
+
+<hr>
+<h3>Poi List</h3>
+Selected City: <span id="selectedCity"></span>
+
+<br><br>
+
+<table id="pois" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>POI ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Public?</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+</table>
 </body>
 </html>
