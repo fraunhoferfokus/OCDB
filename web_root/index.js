@@ -79,9 +79,14 @@ var registerRequestHandler = function(err,response){
 }
 
 window.addEventListener("hashchange",function(){
-	if(location.hash.indexOf("#city=")===0){
-		var cityId=location.hash.split("#city=")[1];
-		document.querySelector("#selectedCity").innerText=cityId;
+	var hashMap={}, hash = location.hash.substring(1);
+	hash=hash.split("&");
+	for(var i=0;i<hash.length;i++){
+		var kv = hash[i].split('=');
+		hashMap[kv[0]]=kv[1];
+	}
+	if(hashMap["city"]){
+		document.querySelector("#selectedCity").innerText=hashMap["city"];
 		initPoiDt('#pois',
 			(function(){
 				return function(options,cb){
@@ -89,7 +94,7 @@ window.addEventListener("hashchange",function(){
 					opt.limit=options.length;
 					opt.offset=options.start;
 					opt.search=options.search&&options.search.value||'';
-					ocdb.pois.get(cityId,opt,function(e,r){
+					ocdb.pois.get(hashMap["city"],opt,function(e,r){
 						if(!e)
 						cb({data:r,draw:options.draw,recordsTotal:r.length,recordsFiltered:r.length});
 					})}
@@ -99,15 +104,14 @@ window.addEventListener("hashchange",function(){
 
 });
 
-
   var initCityDt = function(tableId, ajaxFn) {
     var $table = $(tableId);
+		$table.DataTable().clear().destroy();
 
     // names for column ordering
     $table.data('colnames', ['_id', 'displayName', 'description', 'lat', 'lon', '']);
 
     return $table.dataTable({
-    	destroy: true,
       "autoWidth" : true,
       "processing": true,
       "serverSide": true,
@@ -126,7 +130,7 @@ window.addEventListener("hashchange",function(){
         return data && data.coords[0] || '';
       } },
       { "data": function ( data, type, row) {
-        return '<a href="#city='+data._id+'">select</a>';
+        return '<a href="#city='+data._id+'&ts='+Date.now()+'">select</a>';
       } }
       ],
       "preDrawCallback" : function() {
@@ -143,12 +147,12 @@ window.addEventListener("hashchange",function(){
 
    var initPoiDt = function(tableId, ajaxFn) {
     var $table = $(tableId);
+    $table.DataTable().clear().destroy();
 
     // names for column ordering
     $table.data('colnames', ['_id', 'name', 'description', 'lat', 'lon', 'public', '']);
 
     return $table.dataTable({
-    	destroy: true,
       "autoWidth" : true,
       "processing": true,
       "serverSide": true,
