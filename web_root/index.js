@@ -101,6 +101,19 @@ window.addEventListener("hashchange",function(){
 			})()
 			);
 	}
+	if(hashMap["viewSocialsForPoi"]){
+		document.querySelector("#selectedPoi").innerText=hashMap["viewSocialsForPoi"];
+		initSocialDt('#socials',
+			(function(){
+				return function(options,cb){
+					var opt={expand:"socatt"};
+					ocdb.poi.get(hashMap["viewSocialsForPoi"],opt,function(e,r){
+						if(!e)
+						cb({data:[r],draw:options.draw,recordsTotal:1,recordsFiltered:1});
+					})}
+			})()
+			);
+	}
 
 });
 
@@ -171,11 +184,123 @@ window.addEventListener("hashchange",function(){
         return data && data.coords[0] || '';
       } },
       { "data": function ( data, type, row) {
-        return data && data.public && 'yes' || 'no';
+        var str = data && data.public && 'yes' || 'no';
+      	if(data.user&&(ocdb.user.getUid()===data.user._user||ocdb.user.getUid()===data.user._user._id)){
+        	str = '<br><a href="#togglePoiVisibility='+data._id+'&ts='+Date.now()+'">'+str+'</a>';
+      	}
+      	return str;
       } },
       { "data": function ( data, type, row) {
-        return '<a href="#togglePoiVisibility='+data._id+'">toggle visibility</a> | <a href="#viewPoiSocial='+data._id+'">view social</a> ';
-      } }
+      	var str='';
+      	if(data.socatt){
+      	if(data.socatt.checkins.count){
+      		str=str+data.socatt.checkins.count+' checkins.<br>';
+      	}
+      	if(data.socatt.comments.count){
+      		str=str+data.socatt.comments.count+' comments.<br>';
+      	}
+      	if(data.socatt.likes.count){
+      		str=str+data.socatt.likes.count+' likes.<br>';
+      	}
+      	if(data.socatt.ratings.count){
+      		str=str+data.socatt.ratings.count+' ratings with ave '+data.socatt.ratings.average+'.<br>';
+      	}
+      	}
+      	if(!str){
+      		str = '-';
+      	} else {
+      		str = str + '<a href="#viewSocialsForPoi='+data._id+'&ts='+Date.now()+'">view</a>';
+      	}
+        return str;
+      } },
+      ],
+      "preDrawCallback" : function() {
+        // Initialize the responsive datatables helper once.
+
+      },
+      "rowCallback" : function(nRow) {
+      },
+      "drawCallback" : function(oSettings) {
+
+      }
+    });
+  };
+
+   var initSocialDt = function(tableId, ajaxFn) {
+    var $table = $(tableId);
+    $table.DataTable().clear().destroy();
+
+    // names for column ordering
+    $table.data('colnames', ['_id', 'checkins', 'comments', 'likes', 'ratings']);
+
+    return $table.dataTable({
+      "autoWidth" : true,
+      "processing": true,
+      "serverSide": true,
+      "ajax": ajaxFn,
+      "columns": [
+
+      { "data": "_id" },
+      { "data": function ( data, type, row) {
+      	//checkins
+      	var str="";
+      	if(data.socatt){
+      	if(data.socatt.checkins.checkin.length){
+      		str+="<ul>";
+      		for(var i=0;i<data.socatt.checkins.checkin.length;i++){
+      			str+="<li><i>"+(new Date(data.socatt.checkins.checkin[i].ts).toString())+"</i><br>by <a href='#viewUser="+data.socatt.checkins.checkin[i].user._user._id+"'>"+data.socatt.checkins.checkin[i].user._user.name+"</a></li><br>";
+      		}
+      		str+="</ul>";
+      	}
+      	}
+        return str?str:"-";
+      } },
+      { "data": function ( data, type, row) {
+      	//comments
+      	var str="";
+      	if(data.socatt){
+      	if(data.socatt.comments.comment.length){
+      		str+="<ul>";
+      		for(var i=0;i<data.socatt.comments.comment.length;i++){
+      			str+="<li>"+data.socatt.comments.comment[i].comment+"<br><i>"+(new Date(data.socatt.comments.comment[i].ts).toString())+"</i><br>by <a href='#viewUser="+data.socatt.comments.comment[i].user._user._id+"'>"+data.socatt.comments.comment[i].user._user.name+"</a></li><br>";
+      		}
+      		str+="</ul>";
+      	}
+      	if(data.socatt.likes.like.length){
+
+      	}
+      	if(data.socatt.ratings.rating.length){
+
+      	}
+      	}
+        return str?str:"-";
+      } },
+      { "data": function ( data, type, row) {
+      	var str="";
+      	if(data.socatt){
+      	if(data.socatt.likes.like.length){
+      		str+="<ul>";
+      		for(var i=0;i<data.socatt.likes.like.length;i++){
+      			str+="<li><i>"+(new Date(data.socatt.likes.like[i].ts).toString())+"</i><br>by <a href='#viewUser="+data.socatt.likes.like[i].user._user._id+"'>"+data.socatt.likes.like[i].user._user.name+"</a></li><br>";
+      		}
+      		str+="</ul>";
+      	}
+      	}
+        return str?str:"-";
+      } },
+      { "data": function ( data, type, row) {
+      	var str="";
+      	if(data.socatt){
+      	if(data.socatt.ratings.rating.length){
+      		str+="<ul>";
+      		for(var i=0;i<data.socatt.ratings.rating.length;i++){
+      			str+="<li><i>"+(new Date(data.socatt.ratings.rating[i].ts).toString())+"</i><br>by <a href='#viewUser="+data.socatt.ratings.rating[i].user._user._id+"'>"+data.socatt.ratings.rating[i].user._user.name+"</a></li><br>";
+      		}
+      		str+="</ul>";
+      	}
+      	}
+        return str?str:"-";
+      } },
       ],
       "preDrawCallback" : function() {
         // Initialize the responsive datatables helper once.

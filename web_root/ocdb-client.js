@@ -46,6 +46,7 @@ var OCDBBASEURL = "https://"+OCDBHOST+"/v1/";
 
     var getPoi = function(poiid, options, cb){
         var url = OCDBBASEURL+"pois/"+poiid+"/?q=1";
+        if(options.expand) url+="&expand="+options.expand;
         sendRequest(url,cb,0);
     };
 

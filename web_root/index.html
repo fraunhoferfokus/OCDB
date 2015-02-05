@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <meta name="keywords" content="">
 
-    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
     <link href="css/jquery.dataTables.css" type="text/css" rel="stylesheet">
 
     <script type="text/javascript" src="ocdb-client.js"></script>
@@ -50,7 +50,7 @@
 </div>
 
 <hr>
-<h3>City List</h3>
+<h3>Cities</h3>
 <table id="cities" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -71,7 +71,7 @@
 </div>
 
 <hr>
-<h3>Poi List</h3>
+<h3>Pois</h3>
 Selected City: <span id="selectedCity"></span>
 
 <br><br>
@@ -85,7 +85,29 @@ Selected City: <span id="selectedCity"></span>
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>Public?</th>
-                <th>Action</th>
+                <th>Social</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+</table>
+
+<hr>
+<h3>Social Interactions</h3>
+Selected Poi: <span id="selectedPoi"></span>
+
+<br><br>
+
+<table id="socials" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>POI ID</th>
+                <th>Checkins</th>
+                <th>Comments</th>
+                <th>Likes</th>
+                <th>Ratings</th>
             </tr>
         </thead>
 

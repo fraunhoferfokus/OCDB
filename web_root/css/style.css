@@ -1,0 +1,5 @@
+#socials ul{
+  list-style: none inside;
+  -webkit-padding-start: 0px;
+  padding-start: 0px;
+}
