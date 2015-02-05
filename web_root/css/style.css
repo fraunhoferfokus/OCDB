@@ -3,3 +3,7 @@
   -webkit-padding-start: 0px;
   padding-start: 0px;
 }
+
+.logoutPane {
+  display: none;
+}

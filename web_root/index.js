@@ -51,6 +51,14 @@ var registerHandler = function(e){
 };
 
 var loginRequestHandler = function(err,response){
+	if(err){
+		document.querySelector("#loginErr").innerText="error:"+err;
+		return;
+	}
+	document.querySelector("#loginErr").innerText="";
+	document.querySelector(".logoutPane").style.display="inherit";
+	document.querySelector(".loginPane").style.display="none";
+	document.querySelector(".registerPane").style.display="none";
 	console.log(err,response);
 	if(ocdb.user.getUid()){
 		//$('#cities').DataTable();
@@ -72,10 +80,21 @@ var loginRequestHandler = function(err,response){
 
 var logoutRequestHandler = function(err,response){
 	console.log(err,response);
+	document.querySelector(".logoutPane").style.display="none";
+	document.querySelector(".loginPane").style.display="";
+	document.querySelector(".registerPane").style.display="";
+	$("#cities").DataTable().clear().destroy();
+	$("#pois").DataTable().clear().destroy();
+	$("#socials").DataTable().clear().destroy();
 }
 
 var registerRequestHandler = function(err,response){
 	console.log(err,response);
+	if(err){
+		document.querySelector("#registerErr").innerText="error:"+err;
+		return;
+	}
+	document.querySelector("#registerErr").innerText="";
 }
 
 window.addEventListener("hashchange",function(){
@@ -100,6 +119,7 @@ window.addEventListener("hashchange",function(){
 					})}
 			})()
 			);
+		$("#socials").DataTable().clear().destroy();
 	}
 	if(hashMap["viewSocialsForPoi"]){
 		document.querySelector("#selectedPoi").innerText=hashMap["viewSocialsForPoi"];
@@ -203,7 +223,7 @@ window.addEventListener("hashchange",function(){
         return data && data.coords[0] || '';
       } },
       { "data": function ( data, type, row) {
-        var str = '';
+        var str = 'yes*';
       	if(data.user&&(ocdb.user.getUid()===data.user._user||ocdb.user.getUid()===data.user._user._id)){
       		if(data && data.public){
         		str = '<br><a href="#makePoiPrivate='+data._id+'&city='+data.city._city+'&ts='+Date.now()+'">yes</a>';

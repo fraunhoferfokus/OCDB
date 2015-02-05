@@ -25,6 +25,7 @@
 		<input type="password" name="password" placeholder="OCDB Password!" required >
     <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" -->
 		<input class="submitButton" type="submit" value="login">
+    <br><span id="loginErr"></span>
 	</form>
 </div>
 
@@ -45,7 +46,8 @@
 		<input type="password" name="repassword" placeholder="retype password" required >
     <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" -->
 		<input class="submitButton" type="submit" value="register">
-		<span>password: must contain at least one digit, one lowercase and one uppercase character and must be 6 characters at minimum.</span>
+		<br><span>password: must contain at least one digit, one lowercase and one uppercase character and must be 6 characters at minimum.</span>
+    <br><span id="registerErr"></span>
 	</form>
 </div>
 
@@ -84,7 +86,7 @@ Selected City: <span id="selectedCity"></span>
                 <th>Description</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
-                <th>Public?</th>
+                <th title="* indicates that you are not the owner." style="border-bottom: 1px dotted #0000ba;">Public?</th>
                 <th>Social</th>
             </tr>
         </thead>

@@ -41,6 +41,7 @@ var OCDBBASEURL = "https://"+OCDBHOST+"/v1/";
         if(options.offset) url+="&offset="+options.offset;
         if(options.limit) url+="&limit="+options.limit;
         if(options.expand) url+="&expand="+options.expand;
+        if(options.search) url+="&search="+options.search;
         sendRequest(url,cb,0);
     };
 
