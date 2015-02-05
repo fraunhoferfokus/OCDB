@@ -69,9 +69,9 @@ var loginRequestHandler = function(err,response){
 					opt.limit=options.length;
 					opt.offset=options.start;
 					opt.search=options.search&&options.search.value||'';
-					ocdb.cities.get(opt,function(e,r){
+					ocdb.cities.get(opt,function(e,r,meta){
 						if(!e)
-						cb({data:r,draw:options.draw,recordsTotal:r.length,recordsFiltered:r.length});
+						cb({data:r,draw:options.draw,recordsTotal:meta.recordsTotal,recordsFiltered:meta.recordsFiltered});
 					})}
 			})()
 			);
@@ -113,9 +113,9 @@ window.addEventListener("hashchange",function(){
 					opt.limit=options.length;
 					opt.offset=options.start;
 					opt.search=options.search&&options.search.value||'';
-					ocdb.pois.get(hashMap["city"],opt,function(e,r){
+					ocdb.pois.get(hashMap["city"],opt,function(e,r,meta){
 						if(!e)
-						cb({data:r,draw:options.draw,recordsTotal:r.length,recordsFiltered:r.length});
+						cb({data:r,draw:options.draw,recordsTotal:meta.recordsTotal,recordsFiltered:meta.recordsFiltered});
 					})}
 			})()
 			);

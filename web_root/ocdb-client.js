@@ -251,7 +251,16 @@ var OCDBBASEURL = "https://"+OCDBHOST+"/v1/";
                     callback(req.status?req.status:"error",JSON.parse(req.responseText));
                     return;
                 }
-                callback(0,JSON.parse(req.responseText));
+                var meta={};
+                var h,headersMap={},headers=req.getAllResponseHeaders().split('\n');
+                for(var i=0;i<headers.length;i++){
+                    h=headers[i].split(':');
+                    headersMap[h[0]]=h[1];
+                }
+                var recordsTotal=headersMap["x-ocdb-recordsTotal"];
+                var recordsFiltered=headersMap["x-ocdb-recordsFiltered"];
+                var recordsOwned=headersMap["x-ocdb-recordsOwned"];
+                callback(0,JSON.parse(req.responseText),{recordsTotal:recordsTotal,recordsFiltered:recordsFiltered,recordsOwned:recordsOwned});
                 return;
             } catch (e) { callback(e); }
         };
