@@ -118,7 +118,7 @@ window.addEventListener("hashchange",function(){
 	if(hashMap["makePoiPrivate"]&&hashMap["city"]){
 		ocdb.pois.post({_id:hashMap["makePoiPrivate"],public:false},hashMap["city"],{},function(e,r){
 			if(!e){
-
+				$("#pois").DataTable().draw();
 			}
 			//reload poi table!
 		});
@@ -127,7 +127,7 @@ window.addEventListener("hashchange",function(){
 	if(hashMap["makePoiPublic"]&&hashMap["city"]){
 		ocdb.pois.post({_id:hashMap["makePoiPublic"],public:true},hashMap["city"],{},function(e,r){
 			if(!e){
-
+				$("#pois").DataTable().draw();
 			}
 			//reload poi table!
 		});
