@@ -86,6 +86,7 @@ var logoutRequestHandler = function(err,response){
 	$("#cities").DataTable().clear().destroy();
 	$("#pois").DataTable().clear().destroy();
 	$("#socials").DataTable().clear().destroy();
+	$("#medias").DataTable().clear().destroy();
 }
 
 var registerRequestHandler = function(err,response){
@@ -120,6 +121,7 @@ window.addEventListener("hashchange",function(){
 			})()
 			);
 		$("#socials").DataTable().clear().destroy();
+		$("#medias").DataTable().clear().destroy();
 	}
 	if(hashMap["viewSocialsForPoi"]){
 		document.querySelector("#selectedPoi").innerText=hashMap["viewSocialsForPoi"];
@@ -150,6 +152,32 @@ window.addEventListener("hashchange",function(){
 				$("#pois").DataTable().draw();
 			}
 			//reload poi table!
+		});
+	}
+
+	if(hashMap["viewImagesForPoi"]){
+		document.querySelector("#selectedPoiMedia").innerText=hashMap["viewImagesForPoi"];
+		initMediaDt('#medias',
+			(function(){
+				return function(options,cb){
+					var opt={expand:"user"};
+					opt.limit=1000;
+					opt.offset=0;
+					opt.search=options.search&&options.search.value||'';
+					ocdb.media.get(hashMap["viewImagesForPoi"],opt,function(e,r){
+						if(!e)
+						cb({data:r,draw:options.draw,recordsTotal:r.length,recordsFiltered:r.length});
+					})}
+			})()
+			);
+	}
+
+	if(hashMap["deleteImageForPoi"]){
+		ocdb.media.remove(hashMap["deleteImageForPoi"],{},function(e,r){
+			if(!e){
+				$("#pois").DataTable().draw();
+				$("#medias").DataTable().draw();
+			}
 		});
 	}
 
@@ -249,12 +277,14 @@ window.addEventListener("hashchange",function(){
       		str=str+data.socatt.ratings.count+' ratings with ave '+data.socatt.ratings.average+'.<br>';
       	}
       	}
-      	if(!str){
-      		str = '-';
-      	} else {
+      	if(str){
       		str = str + '<a href="#viewSocialsForPoi='+data._id+'&ts='+Date.now()+'">view</a>';
       	}
-        return str;
+      	if(data.media && data.media._media &&data.media._media.length){
+      		if(str) str+="<hr>"
+      		str=str+data.media._media.length+' <a href="#viewImagesForPoi='+data._id+'&ts='+Date.now()+'">images</a>. ';
+      	}
+        return str||'-';
       } },
       ],
       "preDrawCallback" : function() {
@@ -347,6 +377,55 @@ window.addEventListener("hashchange",function(){
       	}
       	}
         return str?str:"-";
+      } },
+      ],
+      "preDrawCallback" : function() {
+        // Initialize the responsive datatables helper once.
+
+      },
+      "rowCallback" : function(nRow) {
+      },
+      "drawCallback" : function(oSettings) {
+
+      }
+    });
+  };
+
+     var initMediaDt = function(tableId, ajaxFn) {
+    var $table = $(tableId);
+    $table.DataTable().clear().destroy();
+
+    // names for column ordering
+    $table.data('colnames', ['_id', 'type', 'timestamp', 'user', 'url', '']);
+
+    return $table.dataTable({
+    	"bPaginate": false,
+			"bFilter": false,
+			"bInfo": false,
+			'bSortable': false,
+      "autoWidth" : true,
+      "processing": true,
+      "serverSide": true,
+      "ajax": ajaxFn,
+      "columns": [
+
+      { "data": "_id" },
+      { "data": "type" },
+      { "data": function ( data, type, row) {
+      	return new Date(parseInt(data.timestamp)).toString();
+      } },
+      { "data": function ( data, type, row) {
+      	if(!data.user||!data.user._user) return "-";
+        return "by <a href='mailto:"+data.user._user.email+"?subject="+data.user._user.name+", thanks for using the OCDB!&body=Your ID:"+data.user._user._id+"'>"+data.user._user.name+"</a>";
+      } },
+      { "data": function ( data, type, row) {
+        return "<img height='100px' src='"+data.url[0]+"'>";
+      } },
+      { "data": function ( data, type, row) {
+      	if(!data.user||!data.user._user||ocdb.user.getUid()===data.user._user._id){
+      		return ' <a href="#deleteImageForPoi='+data._id+'&ts='+Date.now()+'">delete!</a>';
+      	}
+        return "-";
       } },
       ],
       "preDrawCallback" : function() {
