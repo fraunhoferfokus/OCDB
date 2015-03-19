@@ -36,6 +36,7 @@ Running
 -------
 
 Firstly, start mongoDB using the provided start script:
+(Note: This step is only for your convenience and if you have unpacked the appropriate mongoDB package as described above. You might wish to skip this step, if you wish to use your own mongoDB installation.)
 
 ```
 $ cd ocdb
