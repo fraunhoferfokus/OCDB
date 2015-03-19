@@ -52,6 +52,8 @@ $ node .
 
 Hint: In case of a port below 1024 start the service using sudo.
 
+To check if everything has worked fine and your OCDB instance is up and running, navigate your browser to the address: https://localhost/v1/frontend/ 
+
 Problems
 --------
 
