@@ -25,6 +25,13 @@ Configuration
 
 Check the configuration file at `` ocdb/constants.js `` and change if necessary. Place the SSL certificates at the location specified in the configuration file. See http://nodejs.org/api/tls.html on more inforamtion on how to generate certificates if none at hand.
 
+For development purposes you might wish to use self-signed certificates. Just run the following script to accomplish this.
+
+```
+$ cd ocdb
+$ ./gencerts.sh
+```
+
 Running
 -------
 
