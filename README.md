@@ -69,6 +69,17 @@ For impatient:
 $ docker run -d -p 8080:443 fic2/ocdb:latest
 ```
 
+API usage and JavaScript abstraction
+------------------------------------
+
+Once you OCDB instance is deployed you are ready to use the service within you Web based application. Simply add the JavaScript abstraction of the REST API into your HTML code:
+
+```
+<script type="text/javascript" src="https://domain.com/v1/frontend/ocdb-client.js"></script>
+```
+
+The available API calls can be viewed in the [OCDB client script](web_root/ocdb-client.js#L196)
+
 Problems
 --------
 
