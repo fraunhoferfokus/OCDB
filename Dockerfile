@@ -5,7 +5,7 @@ FROM node:0.10-slim
 WORKDIR /root/ocdb
 
 RUN apt-get -y update && \
-    apt-get -y install wget apg netcat git
+    apt-get -y install wget apg netcat git curl
 
 RUN git clone https://github.com/fraunhoferfokus/ocdb /root/ocdb
 
