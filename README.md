@@ -66,8 +66,25 @@ You may wish to deploy an instance of OCDB using docker. See [OCDB docker instru
 For impatient:
 
 ```
-$ docker run -d -p 8080:443 fic2/ocdb:latest
+$ docker run -d -p 8080:443 fraunhoferfokus/ocdb:latest
+$ docker ps # to get your $CONTAINER_ID
+$ # after a while (initial city names import takes approx. 5 minutes) execute the following... 
+$ docker exec $CONTAINER_ID sh tests/docker_smoketest.sh
 ```
+You should see an output like this:
+
+```
+$ docker exec 36cea3499fbd sh tests/docker_smoketest.sh
+Using host: https://localhost:443
+Registering user...(user may already be registered)
+{"name":"user"}Log in...
+Got this access token: 796aa7a0-d171-11e4-95ab-77c3c5d38528
+Sample request (Get 10 cities around given location)...
+[{"_id":"55102d39c06ca52100dc385f","displayName":"Berlin","coords":[13.3888599,52.5170365]},{"_id":"55102d39c06ca52100dc385e","displayName":"Potsdam","coords":[13.0591397,52.4009309]},{"_id":"55102d39c06ca52100dc385d","displayName":"Dessau-Roßlau","coords":[12.2429261,51.8311104]},{"_id":"55102d39c06ca52100dc3857","displayName":"Leipzig","coords":[12.3810549,51.3391827]},{"_id":"55102d39c06ca52100dc3910","displayName":"Szczecin","coords":[14.5509784,53.4302122]},{"_id":"55102d39c06ca52100dc38ee","displayName":"Dresden","coords":[13.7381437,51.0493286]},{"_id":"55102d39c06ca52100dc3856","displayName":"Halle (Saale)","coords":[11.9705452,51.4825041]},{"_id":"55102d39c06ca52100dc385c","displayName":"Magdeburg","coords":[11.6399609,52.1315889]},{"_id":"55102d39c06ca52100dc3858","displayName":"Chemnitz","coords":[12.9252977,50.8322608]},{"_id":"55102d39c06ca52100dc38f7","displayName":"Gorzów Wielkopolski","coords":[15.2400451,52.7309926]}]
+OCDB: Smoke test ran successful.
+```
+
+
 
 API usage and JavaScript abstraction
 ------------------------------------
