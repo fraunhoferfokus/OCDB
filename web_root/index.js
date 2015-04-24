@@ -59,6 +59,13 @@ var loginRequestHandler = function(err,response){
 	document.querySelector(".logoutPane").style.display="inherit";
 	document.querySelector(".loginPane").style.display="none";
 	document.querySelector(".registerPane").style.display="none";
+  if(response&&response.access_token){
+    document.querySelector("#accesstoken").innerHTML="Access token: "+response.access_token+
+    '<br>View data below or use the <a target="_blank" href="http://fraunhoferfokus.github.io/OCDB/apiconsole/index.html?url='+
+    location.origin+'/v1/frontend/api.json'+
+    '">API console</a>.<br><br>'
+
+  }
 	console.log(err,response);
 	if(ocdb.user.getUid()){
 		//$('#cities').DataTable();
