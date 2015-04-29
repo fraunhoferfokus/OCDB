@@ -1,24 +1,60 @@
 OCDB
 ====
 
-This documentation provides information on how to setup one instance of the OCDB service. Once setup an RESTful API with JavaScript Object Notion (JSON) as data transport format will be available. The API provides access to the content available in the OCDB and provides means to input user generated content (UCG). Using this API data for different cities and their Points of Interests can be retrieved for a usage within Web applications. 
+This documentation provides information on how to setup one instance of the OCDB service. After setup, an RESTful API with JavaScript Object Notion (JSON) as data transport format will be available to be used within your native and web apps. The API provides access to the content made available in the OCDB and provides means to input user generated content (UCG). Using an API the data for different cities and their Points of Interests (POI) can be retrieved for a usage within your applications.
+
+TL;DR
+-----
+
+```
+$ # on a debian-based (# and osx) system. Notice: accatping PRs with instructions for your system!
+$ git clone https://github.com/fraunhoferfokus/ocdb
+$ cd ocdb
+$ npm install
+
+$ # db
+$ mkdir -p db/mongodb/bin
+$ curl -o /tmp/mongodb.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.2.tgz # osx: https://fastdl.mongodb.org/osx/mongodb-osx-x86_64-3.0.2.tgz
+$ tar -xvf /tmp/mongodb.tgz --strip-components 2 -C db/mongodb/bin mongodb-linux-x86_64-3.0.2/bin # osx: mongodb-osx-x86_64-3.0.2/bin
+$ ./startdb.sh
+
+$ # certs
+$ ./gencerts.sh
+
+$ # start the service
+$ sudo node .
+$ # let it start until it says "Up and running ;)"
+
+$ # on a second shell/terminal
+$ curl -s -k -X POST "https://localhost/v1/users" -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"n\":\"user\",\"a\":\"user@domain.com\",\"b\":\"441d05da1f570f55e0c8172787cdc1302ecad5db\"}"
+$ at=`curl -s -k -X GET "https://localhost/v1/users?a=12dea96fec20593566ab75692c9949596833adc9&b=441d05da1f570f55e0c8172787cdc1302ecad5db" -H "Accept: application/json"  | cut -f 4 -d \" -`
+$ curl -s -k -X GET "https://localhost/v1/cities?lat=52.5258885&lon=13.3142135&offset=0&limit=10" -H "Accept: application/json" -H "Authorization: token "$at
+$ echo "Your token for the try out API console: "$at
+```
+
+Congrats. You did it! Want to explore the API? Try out the API console with [your private installation](http://fraunhoferfokus.github.io/OCDB/apiconsole/index.html?url=https://localhost/v1/frontend/api.json) (Notice: this will only work if you succeeded with the steps before) or try out [our public installation](http://fraunhoferfokus.github.io/OCDB/) (Notice: see the details there).
+
 
 Installation
 ------------
 
-Required software components for a successful installation and operation. Make sure the following components are available on the installation machine / server: 
+Required software components for a successful installation and operation. Make sure the following components are available on the installation machine / server:
 * git
 * node.js
+* mongoDB (see details below)
 
 Execute the following steps to install a OCDB instance on your machine / server.
 
 ```
 $ git clone https://github.com/fraunhoferfokus/ocdb
 $ cd ocdb
-$ npm install 
+$ npm install
 ```
 
+Please consider a 64 bit host machine for mongoDB.
 The underlying database is a document-oriented database, in particular mongoDB. Choose the appropriate binaries from the Mongo DB website (http://www.mongodb.org/downloads) and extract them into `` ocdb/db/mongodb ``. Afterwards the mongoDB deamon should be available at  `` ocdb/db/mongodb/bin/mongod ``
+
+Important notice: remember to review the default configuration of mongoDB when going to deploy on a public machine!
 
 Configuration
 -------------
@@ -52,7 +88,7 @@ $ node .
 
 Hint: In case of a port below 1024 start the service using sudo.
 
-To check if everything has worked fine and your OCDB instance is up and running, navigate your browser to the address: https://localhost/v1/frontend/ 
+To check if everything has worked fine and your OCDB instance is up and running, navigate your browser to the address: https://localhost/v1/frontend/
 
 Tests
 -----
@@ -68,7 +104,7 @@ For impatient:
 ```
 $ docker run -d -p 8080:443 fraunhoferfokus/ocdb:latest
 $ docker ps # to get your $CONTAINER_ID
-$ # after a while (initial city names import takes approx. 5 minutes) execute the following... 
+$ # after a while (initial city names import takes approx. 5 minutes) execute the following...
 $ docker exec $CONTAINER_ID sh tests/docker_smoketest.sh
 ```
 You should see an output like this:
@@ -102,6 +138,10 @@ Problems
 
 Please use the issue tracker to report any problems you might encounter.
 
+FAQ?
+--------
+
+[Yes, of course](FAQ.md).
 
 License
 -------
