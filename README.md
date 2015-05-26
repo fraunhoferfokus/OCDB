@@ -95,10 +95,19 @@ Tests
 
 A CURL based [smoke test](tests/docker_smoketest.sh) is available.
 
+Playground Example App
+----------------------
+
+Having got up to this point successfully you may now with to play around with the service.
+Have a look at the [playground source code](web_root/playground) for a fully functional first example. At the [project's web page](http://fraunhoferfokus.github.io/OCDB/) a hosted version of this example is linked.
+
+
 Deployment (Docker)
 -------------------
 
-You may wish to deploy an instance of OCDB using docker. See [OCDB docker instructions](README.docker.md) for more information.
+You may wish to deploy an instance of OCDB using docker. See [OCDB docker instructions](README.docker.md) for more information. Using docker you can install an instance of the OCDB on a [broad range of systems](https://docs.docker.com/installation/#installation)
+
+
 For impatient:
 
 ```
