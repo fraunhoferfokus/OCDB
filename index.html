@@ -7,11 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css">
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
-  <title>Open City Database</title>
+  <title>OCDB SE</title>
   <meta name="description" content="Open City Database - Quick and easy deployable cities related data service with read/write access to user generated content, points of interest and social interactions (likes, comments, ratings, check-ins).">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,28 +22,64 @@
 
   <div class="wrapper">
     <header>
-      <h1 class="title">Open City Database</h1>
+
+      <h1 class="title"><img src="images/ocdb_logo_250px.png" alt="OCDB"></h1>
     </header>
     <div id="container">
-      <p class="tagline">Open City Database - Quick and easy deployable cities related data service with read/write access to user generated content, points of interest and social interactions (likes, comments, ratings, check-ins).</p>
+      <p class="tagline">Open City Database SE - Quick and easy deployable cities related data service with read/write access to user generated content, points of interest and social interactions (likes, comments, ratings, check-ins).</p>
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
           <a href="https://github.com/fraunhoferfokus/OCDB/tarball/master" class="download-button tar"><span>Download</span></a>
           <a href="https://github.com/fraunhoferfokus/OCDB/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/fraunhoferfokus/OCDB" class="code">View Open City Database on GitHub</a>
+          <a href="https://github.com/fraunhoferfokus/OCDB" class="code">View OCDB SE on GitHub</a>
         </div>
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h3>
-<a id="ocdb" class="anchor" href="#ocdb" aria-hidden="true"><span class="octicon octicon-link"></span></a>OCDB</h3>
+          <h1>
+<a id="get-in-touch-now" class="anchor" href="#get-in-touch-now" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get in touch now!</h1>
+
+<p>To get you OCDB interested folks from zero to hero we have an API console established enabling you to play around with the service. So let's start...</p>
+
+<ol>
+<li>To Register at the <a href="https://ocdb.fokus.fraunhofer.de/v1/frontend/index.html">public endpoint</a>.</li>
+<li>Login there. You will be provided with an access token.</li>
+<li>Use the access token in the <a href="apiconsole/index.html">API console</a> for your fun. But be kind. </li>
+</ol>
+
+<blockquote>
+<p>Notice: there is no warranty on availability of the public endpoint provided here. Set up your own. It's not that difficult ;)  </p>
+</blockquote>
+
+<h1>
+<a id="playground" class="anchor" href="#playground" aria-hidden="true"><span class="octicon octicon-link"></span></a>Playground</h1>
+
+Have a look at the simple <a href="http://jsfiddle.net/Lu7cjev0/">jsfiddle snippet</a> and be invited to tweak the sample code and learn how easy the OCDB service can be used within apps.
+
+<h1>
+<a id="docu" class="anchor" href="#docu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+The API is fully documented and provided via <a href="https://raw.githubusercontent.com/fraunhoferfokus/OCDB/master/web_root/api.json">swagger description file</a>. The most recent version is available within the API console (see <a href="#get-in-touch-now">Get in touch now!</a>). Current version of the API is v1.
+
+For information how to setup and deployment please have a look on the <a href="https://github.com/fraunhoferfokus/OCDB/blob/master/README.md">README</a>.
+
+<h1>
+<a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h1>
+
+See <a href="https://github.com/fraunhoferfokus/OCDB/blob/master/FAQ.md">frequently asked questions</a> list within the repository.
+
+
+<h1>
+<a id="background-information" class="anchor" href="#background-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background information</h1>
+
+<p>You are wondering for what the "SE" stands? Read all about enablers, specific enablers (-&gt; SE :) and other software modules that might be interesting for your app or business at <a href="http://mediafi.org/">mediafi.org</a> </p>
         </article>
       </div>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/fraunhoferfokus" class="avatar"><img src="https://avatars1.githubusercontent.com/u/1138347?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/fraunhoferfokus">fraunhoferfokus</a> maintains <a href="https://github.com/fraunhoferfokus/OCDB">Open City Database</a></p>
+      <p><a href="https://github.com/fraunhoferfokus" class="avatar"><img src="https://avatars1.githubusercontent.com/u/1138347?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/fraunhoferfokus">fraunhoferfokus</a> maintains <a href="https://github.com/fraunhoferfokus/OCDB">OCDB SE</a></p>
 
 
       </div>
@@ -58,6 +94,20 @@
     <p class="name"></p>
   </div>
 
-  
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//famalytics.fokus.fraunhofer.de/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 14]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//famalytics.fokus.fraunhofer.de/piwik.php?idsite=14" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
 </body>
 </html>
