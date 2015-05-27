@@ -62,7 +62,7 @@ var loginRequestHandler = function(err,response){
   if(response&&response.access_token){
     document.querySelector("#accesstoken").innerHTML="Access token: "+response.access_token+
     '<br>View data below or use the <a target="_blank" href="http://fraunhoferfokus.github.io/OCDB/apiconsole/index.html?url='+
-    location.origin+'/v1/frontend/api.json'+
+    location.origin+'/v1/frontend/api/swagger.json'+
     '">API console</a>.<br><br>'
 
   }
