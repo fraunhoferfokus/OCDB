@@ -22,13 +22,13 @@
     "paths": {
         "/users": {
             "get": {
-                "summary": "OCDB login.",
-                "description": "To access any OCDB instance a authorization token needs to be created. For this purpose the login request must be performed.",
+                "summary": "Login/logout a user",
+                "description": "To access any OCDB instance a authorization token needs to be created. For this purpose the login request must be performed",
                 "parameters": [
                     {
                         "name": "a",
                         "in": "query",
-                        "description": "(SHA1) hashed user name or email of the user to log in. For a log out just leave this parameter empty.",
+                        "description": "(SHA1) hashed user name or email of the user to log in. For a log out just leave this parameter empty",
                         "required": true,
                         "type": "string",
                         "format": "string"
@@ -36,7 +36,7 @@
                     {
                         "name": "b",
                         "in": "query",
-                        "description": "(SHA1) hashed password of the user to log in. For a log out just leave this parameter empty.",
+                        "description": "(SHA1) hashed password of the user to log in. For a log out just leave this parameter empty",
                         "required": true,
                         "type": "string",
                         "format": "string"
@@ -47,22 +47,170 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "An array of products",
+                        "description": "Access object",
                         "schema": {
                             "$ref": "#/definitions/Access"
                         }
                     },
                     "400": {
-                        "description": "Bad request"
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "401": {
-                        "description": "Unauthorized request"
+                        "description": "Unauthorized request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
-                    "default": {
-                        "description": "Unexpected error",
+                    "500": {
+                        "description": "Internal error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Register a user",
+                "description": "To access any OCDB instance a authorization token needs to be created. For this purpose the login request must be performed",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AccessRequest"
+                        }
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registration confirmation",
+                        "schema": {
+                            "$ref": "#/definitions/AccessRequestResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "User exists already",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/cities": {
+            "get": {
+                "summary": "Get a list of cities",
+                "description": "To access any OCDB instance a authorization token needs to be created. For this purpose the login request must be performed",
+                "parameters": [
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "Latitude of the center point to start the query from",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "lon",
+                        "in": "query",
+                        "description": "Longitude of the center point to start the query from",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The offset of the first index in the result array",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit the returned item count to this value",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Fulltext search to be applied (can NOT be combined with lat/lon)",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Query explicitely by city name (can be combined with lat/lon)",
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "City"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of cities",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/City"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -72,29 +220,240 @@
         }
     },
     "definitions": {
+        "City": {
+            "properties": {
+                "locode": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "locale": {
+                    "type": "string"
+                },
+                "coords": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "socatt": {
+                    "$ref": "#/definitions/SocialAttributes"
+                }
+            }
+        },
+        "SocialAttributes": {
+            "properties": {
+                "likes": {
+                    "$ref": "#/definitions/Likes"
+                },
+                "checkins": {
+                    "$ref": "#/definitions/Checkins"
+                },
+                "ratings": {
+                    "$ref": "#/definitions/Ratings"
+                },
+                "comments": {
+                    "$ref": "#/definitions/Comments"
+                }
+            }
+        },
+        "Likes": {
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "like": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Like"
+                    }
+                }
+            }
+        },
+        "Like": {
+            "properties": {
+                "user._user": {
+                    "$ref": "#/definitions/User"
+                },
+                "like": {
+                    "type": "boolean"
+                },
+                "ts": {
+                    "type": "integer"
+                },
+                "coords": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "city._city": {
+                    "$ref": "#/definitions/City"
+                }
+            }
+        },
+        "Checkins": {
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "checkin": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Checkin"
+                    }
+                }
+            }
+        },
+        "Checkin": {
+            "properties": {
+                "user._user": {
+                    "$ref": "#/definitions/User"
+                },
+                "ts": {
+                    "type": "integer"
+                },
+                "coords": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "city._city": {
+                    "$ref": "#/definitions/City"
+                }
+            }
+        },
+        "Ratings": {
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "average": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Rating"
+                    }
+                }
+            }
+        },
+        "Rating": {
+            "properties": {
+                "user._user": {
+                    "$ref": "#/definitions/User"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "ts": {
+                    "type": "integer"
+                },
+                "coords": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "city._city": {
+                    "$ref": "#/definitions/City"
+                }
+            }
+        },
+        "Comments": {
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "comment": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Comment"
+                    }
+                }
+            }
+        },
+        "Comment": {
+            "properties": {
+                "user._user": {
+                    "$ref": "#/definitions/User"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "ts": {
+                    "type": "integer"
+                },
+                "coords": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "city._city": {
+                    "$ref": "#/definitions/City"
+                }
+            }
+        },
         "Access": {
             "properties": {
                 "access_token": {
                     "type": "string",
-                    "description": "The access token after successful log in. This token is to be used in any subsequent request as header parameter."
+                    "description": "The access token after successful log in. This token is to be used in any subsequent request as header parameter"
                 },
                 "uid": {
                     "type": "string",
-                    "description": "The unique identifier for the logged in user."
+                    "description": "The unique identifier for the logged in user"
+                }
+            }
+        },
+        "AccessRequest": {
+            "properties": {
+                "n": {
+                    "type": "string",
+                    "description": "user name of the user to register"
+                },
+                "a": {
+                    "type": "string",
+                    "description": "email of the user to register"
+                },
+                "b": {
+                    "type": "string",
+                    "description": "(SHA1) hashed password of the user to register"
+                }
+            }
+        },
+        "AccessRequestResponse": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "user name of the registered user"
+                }
+            }
+        },
+        "User": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "user name of the linked user"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "email of the linked user"
                 }
             }
         },
         "Error": {
             "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "fields": {
-                    "type": "string"
+                "errorType": {
+                    "type": "string",
+                    "description": "One of the following possible values with regard to the request and correlation to the HTTP error code - \"wrong_mimetype\", \"method_not_allowed\", \"resource_not_found\", \"resource_conflict\", \"request_invalid\", \"request_unauthorized\", \"internal_server_error\""
                 }
             }
         }
