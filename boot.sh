@@ -20,4 +20,7 @@ until nc -z localhost 27017
 do
     sleep 2s
 done
+
+# fix to convince docker where our home is
+export HOME=/root
 node .
