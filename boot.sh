@@ -33,10 +33,21 @@ do
     ps | grep $node_pid | grep -v grep
     ec=$?
     if [ $ec -ne 0 ]; then
-        echo "node/iojs process exited with return code: $ec";
+        wait $node_pid
+        node_status=$?
+        echo "node/iojs process exited with return code: $node_status";
         exit 1;
     fi
     sleep 2s
 done
 
-exit 0;
+# keep this container alive until service terminates 
+while   ps | grep $node_pid | grep -v grep    
+do
+    sleep 60
+done
+
+wait $node_pid
+node_status=$?
+echo "node/iojs process exited with return code: $node_status";
+exit $node_status;
