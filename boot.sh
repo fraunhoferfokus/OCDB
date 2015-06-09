@@ -23,4 +23,20 @@ done
 
 # fix to convince docker where our home is
 export HOME=/root
-node .
+node . &
+node_pid=$!
+
+# wait for the service to be available
+until nc -z localhost 443
+do
+    # check if there was a problem during service start already
+    ps | grep $node_pid | grep -v grep
+    ec=$?
+    if [ $ec -ne 0 ]; then
+        echo "node/iojs process exited with return code: $ec";
+        exit 1;
+    fi
+    sleep 2s
+done
+
+exit 0;
