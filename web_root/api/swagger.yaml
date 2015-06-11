@@ -1,5 +1,3 @@
-# this is an example of the Uber API
-# as a demonstration of an API spec in YAML
 swagger: '2.0'
 info:
   title: Open City Database API
@@ -97,7 +95,7 @@ paths:
     get:
       summary: Get a list of cities
       description: 
-        To access any OCDB instance a authorization token needs to be created. For this purpose the login request must be performed
+        A list of cities based on a location and an optional name can be requested. Location and name will be discarded if fulltext search parameter is used.
       parameters: 
         - name: lat
           in: query
@@ -111,6 +109,16 @@ paths:
           required: true
           type: string
           format: string
+        - name: name
+          in: query
+          description: Query explicitely by city name (can be combined with lat/lon)
+          type: string
+          format: string
+        - name: search
+          in: query
+          description: Fulltext search to be applied (can NOT be combined with lat/lon)
+          type: string
+          format: string
         - name: offset
           in: query
           description: The offset of the first index in the result array
@@ -121,21 +129,11 @@ paths:
           description: Limit the returned item count to this value
           type: string
           format: string
-        - name: search
-          in: query
-          description: Fulltext search to be applied (can NOT be combined with lat/lon)
-          type: string
-          format: string
-        - name: name
-          in: query
-          description: Query explicitely by city name (can be combined with lat/lon)
-          type: string
-          format: string
       tags:
         - City
       responses:
         200:
-          description: An array of cities
+          description: An array of cities. May be an empty Array.
           schema:
             type: array
             items:
@@ -148,15 +146,414 @@ paths:
           description: Unauthorized request
           schema:
             $ref: '#/definitions/Error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/Error'
+  /cities/{cityid}:
+    get:
+      summary: Get a single city record
+      description: 
+        A single city record can be requested by its id
+      parameters: 
+        - name: cityid
+          in: path
+          description: The id of the city
+          required: true
+          type: string
+          format: string
+      tags:
+        - City
+      responses:
+        200:
+          description: A single city record
+          schema:
+            $ref: '#/definitions/City'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized request
+          schema:
+            $ref: '#/definitions/Error'
         404:
-          description: User not found
+          description: City not found
           schema:
             $ref: '#/definitions/Error'
         500:
           description: Internal error
           schema:
             $ref: '#/definitions/Error'
-definitions:
+  /cities/{cityid}/pois:
+    get:
+      summary: Get a list of pois for a selected city
+      description: 
+        A list of pois based on a location and an optional search query can be requested.
+      parameters: 
+        - name: cityid
+          in: path
+          description: The id of the city
+          required: true
+          type: string
+          format: string
+        - name: lat
+          in: query
+          description: Latitude of the center point to start the query from
+          required: true
+          type: string
+          format: string
+        - name: lon
+          in: query
+          description: Longitude of the center point to start the query from
+          required: true
+          type: string
+          format: string
+        - name: lat2
+          in: query
+          description: Secondary Latitude for bounding box search
+          type: string
+          format: string
+        - name: lon2
+          in: query
+          description: Secondary Longitude for bounding box search
+          type: string
+          format: string
+        - name: search
+          in: query
+          description: Fulltext search to be applied
+          type: string
+          format: string
+        - name: offset
+          in: query
+          description: The offset of the first index in the result array
+          type: string
+          format: string
+        - name: limit
+          in: query
+          description: Limit the returned item count to this value
+          type: string
+          format: string
+      tags:
+        - City 
+        - Poi
+      responses:
+        200:
+          description: An array of pois. May be an empty Array.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Poi'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized request
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new poi
+      description: 
+        To create a new poi record a document with relevant information needs to be posted
+      parameters:
+        - name: cityid
+          in: path
+          description: The id of the city
+          required: true
+          type: string
+          format: string
+        - name: poi
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Poi'
+      tags:
+        - City
+        - Poi
+      responses:
+        200:
+          description: Registration confirmation
+          schema:
+            $ref: '#/definitions/AccessRequestResponse'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized request
+          schema:
+            $ref: '#/definitions/Error'
+        409:
+          description: User exists already
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/Error'
+  /pois:
+    get:
+      summary: Get a list of pois for a selected city
+      description: 
+        A list of pois based on a location and an optional search query can be requested.
+      parameters: 
+        - name: cityid
+          in: query
+          description: The id of the city
+          required: true
+          type: string
+          format: string
+        - name: lat
+          in: query
+          description: Latitude of the center point to start the query from
+          required: true
+          type: string
+          format: string
+        - name: lon
+          in: query
+          description: Longitude of the center point to start the query from
+          required: true
+          type: string
+          format: string
+        - name: lat2
+          in: query
+          description: Secondary Latitude for bounding box search
+          type: string
+          format: string
+        - name: lon2
+          in: query
+          description: Secondary Longitude for bounding box search
+          type: string
+          format: string
+        - name: search
+          in: query
+          description: Fulltext search to be applied
+          type: string
+          format: string
+        - name: offset
+          in: query
+          description: The offset of the first index in the result array
+          type: string
+          format: string
+        - name: limit
+          in: query
+          description: Limit the returned item count to this value
+          type: string
+          format: string
+      tags:
+        - City 
+        - Poi
+      responses:
+        200:
+          description: An array of pois. May be an empty Array.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Poi'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized request
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new poi
+      description: 
+        To create a new poi record a document with relevant information needs to be posted
+      parameters:
+        - name: cityid
+          in: query
+          description: The id of the city
+          required: true
+          type: string
+          format: string
+        - name: poi
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Poi'
+      tags:
+        - City
+        - Poi
+      responses:
+        200:
+          description: Registration confirmation
+          schema:
+            $ref: '#/definitions/AccessRequestResponse'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized request
+          schema:
+            $ref: '#/definitions/Error'
+        409:
+          description: User exists already
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/Error'
+  /pois/{poiid}:
+    get:
+      summary: Get a single specific poi
+      description: 
+        A single poi record can be requested by its id
+      parameters: 
+        - name: poiid
+          in: path
+          description: The id of the poi
+          required: true
+          type: string
+          format: string
+        - name: expand
+          in: query
+          description: Name of the poi attribute to fully expand
+          type: string
+          format: string
+      tags:
+        - Poi
+      responses:
+        200:
+          description: The poi record
+          schema:
+            $ref: '#/definitions/Poi'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized request
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Poi not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:  
+  Poi:
+    properties:
+      name: 
+        type: string
+      description: 
+        type: string
+      contact:
+        $ref: '#/definitions/Contact'
+      openHours:
+        type: array
+        items:
+          $ref: '#/definitions/OpenHours'
+      fee:
+        type: array
+        items:
+          $ref: '#/definitions/Fee'
+      tags: 
+        type: array
+        items: 
+          type: string
+      coords: 
+        type: array
+        items: 
+          type: integer
+      city:
+        $ref: '#/definitions/City'
+      media:
+        $ref: '#/definitions/Medias'
+      public: 
+        type: boolean
+      user: 
+        $ref: '#/definitions/User'
+      socatt: 
+        $ref: '#/definitions/SocialAttributes'
+      source: 
+        type: string
+  Contact:
+    properties:
+      address: 
+        type: string
+      phone: 
+        type: string
+      link: 
+        type: string
+      email: 
+        type: string
+  Fee:
+    properties:
+      currency: 
+        type: string
+      value: 
+        type: number
+      hint: 
+        type: string
+  OpenHours:
+    properties:
+      frondow: 
+        type: integer
+      fromtime: 
+        type: integer
+      todow: 
+        type: integer
+      totime: 
+        type: integer
+      startdate: 
+        type: integer
+      occurance: 
+        type: integer
+      every: 
+        type: integer
+  Medias:
+    properties:
+      refurl: 
+        type: string
+      mediaCount: 
+        type: integer
+      _media: 
+        type: array
+        items:
+          $ref: '#/definitions/Media'
+  Media:
+    properties:
+      title: 
+        type: string
+      url: 
+        type: array
+        items: 
+          type: string
+      type: 
+        type: string
+      user: 
+        $ref: '#/definitions/User'
+      timestamp: 
+        type: string
+      featured: 
+        type: boolean
+      poi: 
+        $ref: '#/definitions/Poi'
+      attributes: 
+        type: object
+      coords: 
+        type: array
+        items: 
+          type: integer
+      socatt: 
+        $ref: '#/definitions/SocialAttributes'
   City:
     properties:
       locode: 
