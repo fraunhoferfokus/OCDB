@@ -3,7 +3,7 @@ info:
   title: Open City Database API
   description: Quick and easy deployable cities related data service with read/write access to user generated content, points of interest and social interactions (likes, comments, ratings, check-ins).
   version: "1.0.2"
-  license: 
+  license:
     name: Apache 2.0
 # array of all schemes that the OCDB API supports
 schemes:
@@ -20,7 +20,7 @@ paths:
   /users:
     get:
       summary: Login/logout a user
-      description: 
+      description:
         To access any OCDB instance a authorization token needs to be created. For this purpose the login request must be performed
       parameters:
         - name: a
@@ -60,7 +60,7 @@ paths:
             $ref: '#/definitions/Error'
     post:
       summary: Register a user
-      description: 
+      description:
         To access any OCDB instance a authorization token needs to be created. For this purpose the login request must be performed
       parameters:
         - name: user
@@ -94,9 +94,9 @@ paths:
   /cities:
     get:
       summary: Get a list of cities
-      description: 
+      description:
         A list of cities based on a location and an optional name can be requested. Location and name will be discarded if fulltext search parameter is used.
-      parameters: 
+      parameters:
         - name: lat
           in: query
           description: Latitude of the center point to start the query from
@@ -153,9 +153,9 @@ paths:
   /cities/{cityid}:
     get:
       summary: Get a single city record
-      description: 
+      description:
         A single city record can be requested by its id
-      parameters: 
+      parameters:
         - name: cityid
           in: path
           description: The id of the city
@@ -188,9 +188,9 @@ paths:
   /cities/{cityid}/pois:
     get:
       summary: Get a list of pois for a selected city
-      description: 
+      description:
         A list of pois based on a location and an optional search query can be requested.
-      parameters: 
+      parameters:
         - name: cityid
           in: path
           description: The id of the city
@@ -235,7 +235,6 @@ paths:
           type: string
           format: string
       tags:
-        - City 
         - Poi
       responses:
         200:
@@ -258,7 +257,7 @@ paths:
             $ref: '#/definitions/Error'
     post:
       summary: Create a new poi
-      description: 
+      description:
         To create a new poi record a document with relevant information needs to be posted
       parameters:
         - name: cityid
@@ -273,7 +272,6 @@ paths:
           schema:
             $ref: '#/definitions/Poi'
       tags:
-        - City
         - Poi
       responses:
         200:
@@ -299,9 +297,9 @@ paths:
   /pois:
     get:
       summary: Get a list of pois for a selected city
-      description: 
+      description:
         A list of pois based on a location and an optional search query can be requested.
-      parameters: 
+      parameters:
         - name: cityid
           in: query
           description: The id of the city
@@ -346,7 +344,6 @@ paths:
           type: string
           format: string
       tags:
-        - City 
         - Poi
       responses:
         200:
@@ -369,7 +366,7 @@ paths:
             $ref: '#/definitions/Error'
     post:
       summary: Create a new poi
-      description: 
+      description:
         To create a new poi record a document with relevant information needs to be posted
       parameters:
         - name: cityid
@@ -384,7 +381,6 @@ paths:
           schema:
             $ref: '#/definitions/Poi'
       tags:
-        - City
         - Poi
       responses:
         200:
@@ -410,9 +406,9 @@ paths:
   /pois/{poiid}:
     get:
       summary: Get a single specific poi
-      description: 
+      description:
         A single poi record can be requested by its id
-      parameters: 
+      parameters:
         - name: poiid
           in: path
           description: The id of the poi
@@ -447,12 +443,12 @@ paths:
           description: Internal error
           schema:
             $ref: '#/definitions/Error'
-definitions:  
+definitions:
   Poi:
     properties:
-      name: 
+      name:
         type: string
-      description: 
+      description:
         type: string
       contact:
         $ref: '#/definitions/Contact'
@@ -464,111 +460,111 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Fee'
-      tags: 
+      tags:
         type: array
-        items: 
+        items:
           type: string
-      coords: 
+      coords:
         type: array
-        items: 
+        items:
           type: integer
       city:
         $ref: '#/definitions/City'
       media:
         $ref: '#/definitions/Medias'
-      public: 
+      public:
         type: boolean
-      user: 
+      user:
         $ref: '#/definitions/User'
-      socatt: 
+      socatt:
         $ref: '#/definitions/SocialAttributes'
-      source: 
+      source:
         type: string
   Contact:
     properties:
-      address: 
+      address:
         type: string
-      phone: 
+      phone:
         type: string
-      link: 
+      link:
         type: string
-      email: 
+      email:
         type: string
   Fee:
     properties:
-      currency: 
+      currency:
         type: string
-      value: 
+      value:
         type: number
-      hint: 
+      hint:
         type: string
   OpenHours:
     properties:
-      frondow: 
+      frondow:
         type: integer
-      fromtime: 
+      fromtime:
         type: integer
-      todow: 
+      todow:
         type: integer
-      totime: 
+      totime:
         type: integer
-      startdate: 
+      startdate:
         type: integer
-      occurance: 
+      occurance:
         type: integer
-      every: 
+      every:
         type: integer
   Medias:
     properties:
-      refurl: 
+      refurl:
         type: string
-      mediaCount: 
+      mediaCount:
         type: integer
-      _media: 
+      _media:
         type: array
         items:
           $ref: '#/definitions/Media'
   Media:
     properties:
-      title: 
+      title:
         type: string
-      url: 
+      url:
         type: array
-        items: 
+        items:
           type: string
-      type: 
+      type:
         type: string
-      user: 
+      user:
         $ref: '#/definitions/User'
-      timestamp: 
+      timestamp:
         type: string
-      featured: 
+      featured:
         type: boolean
-      poi: 
+      poi:
         $ref: '#/definitions/Poi'
-      attributes: 
+      attributes:
         type: object
-      coords: 
+      coords:
         type: array
-        items: 
+        items:
           type: integer
-      socatt: 
+      socatt:
         $ref: '#/definitions/SocialAttributes'
   City:
     properties:
-      locode: 
+      locode:
         type: string
-      displayName: 
+      displayName:
         type: string
-      description: 
+      description:
         type: string
-      locale: 
+      locale:
         type: string
-      coords: 
+      coords:
         type: array
-        items: 
+        items:
           type: integer
-      socatt: 
+      socatt:
         $ref: '#/definitions/SocialAttributes'
   SocialAttributes:
     properties:
@@ -594,11 +590,11 @@ definitions:
         $ref: '#/definitions/User'
       like:
         type: boolean
-      ts: 
+      ts:
         type: integer
-      coords: 
+      coords:
         type: array
-        items: 
+        items:
           type: integer
       city._city:
         $ref: '#/definitions/City'
@@ -614,11 +610,11 @@ definitions:
     properties:
       user._user:
         $ref: '#/definitions/User'
-      ts: 
+      ts:
         type: integer
-      coords: 
+      coords:
         type: array
-        items: 
+        items:
           type: integer
       city._city:
         $ref: '#/definitions/City'
@@ -638,11 +634,11 @@ definitions:
         $ref: '#/definitions/User'
       rating:
         type: number
-      ts: 
+      ts:
         type: integer
-      coords: 
+      coords:
         type: array
-        items: 
+        items:
           type: integer
       city._city:
         $ref: '#/definitions/City'
@@ -660,11 +656,11 @@ definitions:
         $ref: '#/definitions/User'
       comment:
         type: string
-      ts: 
+      ts:
         type: integer
-      coords: 
+      coords:
         type: array
-        items: 
+        items:
           type: integer
       city._city:
         $ref: '#/definitions/City'
@@ -686,7 +682,7 @@ definitions:
         description: email of the user to register
       b:
         type: string
-        description: (SHA1) hashed password of the user to register  
+        description: (SHA1) hashed password of the user to register
   AccessRequestResponse:
     properties:
       name:
@@ -704,4 +700,6 @@ definitions:
     properties:
       errorType:
         type: string
-        description: One of the following possible values with regard to the request and correlation to the HTTP error code - "wrong_mimetype", "method_not_allowed", "resource_not_found", "resource_conflict", "request_invalid", "request_unauthorized", "internal_server_error" 
+        description: One of the following possible values with regard to the request and correlation to the HTTP error code - "wrong_mimetype", "method_not_allowed", "resource_not_found", "resource_conflict", "request_invalid", "request_unauthorized", "internal_server_error"
+
+
