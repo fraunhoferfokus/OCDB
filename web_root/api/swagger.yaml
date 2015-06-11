@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Open City Database API
-  description: Quick and easy deployable cities related data service with read/write access to user generated content, points of interest and social interactions (likes, comments, ratings, check-ins).
+  description: Quick and easy deployable cities related data service with read/write access to user generated content, points of interest and social interactions (likes, comments, ratings, check-ins). Notice:Beware the authentication requirements for the OCDB API. A appropriately configured API console is available at http://fraunhoferfokus.github.io/OCDB/apiconsole/index.html
   version: "1.0.2"
   license:
     name: Apache 2.0
