@@ -129,7 +129,16 @@ Sample request (Get 10 cities around given location)...
 OCDB: Smoke test ran successful.
 ```
 
+API authentication requirements
+-------------------------------
 
+Requests towards the OCDB API require an authentication. The required access token can be aquired with the following HTTP request:
+
+```sh
+curl -s -k -X GET "https://$HOST:$PORT/v1/users?a=$SHA1USEROREMAIL&b=$SHA1PASSWORD" -H "Accept: application/json
+```
+
+For more information see the [API documentation](http://fraunhoferfokus.github.io/OCDB/apiconsole/index.html).
 
 API usage and JavaScript abstraction
 ------------------------------------
