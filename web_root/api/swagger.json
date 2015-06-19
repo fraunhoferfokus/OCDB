@@ -389,7 +389,7 @@
                     "200": {
                         "description": "Registration confirmation",
                         "schema": {
-                            "$ref": "#/definitions/AccessRequestResponse"
+                            "$ref": "#/definitions/Poi"
                         }
                     },
                     "400": {
@@ -545,7 +545,7 @@
                     "200": {
                         "description": "Registration confirmation",
                         "schema": {
-                            "$ref": "#/definitions/AccessRequestResponse"
+                            "$ref": "#/definitions/Poi"
                         }
                     },
                     "400": {

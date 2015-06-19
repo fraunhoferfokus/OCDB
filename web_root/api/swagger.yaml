@@ -277,7 +277,7 @@ paths:
         200:
           description: Registration confirmation
           schema:
-            $ref: '#/definitions/AccessRequestResponse'
+            $ref: '#/definitions/Poi'
         400:
           description: Bad request
           schema:
@@ -386,7 +386,7 @@ paths:
         200:
           description: Registration confirmation
           schema:
-            $ref: '#/definitions/AccessRequestResponse'
+            $ref: '#/definitions/Poi'
         400:
           description: Bad request
           schema:
