@@ -135,9 +135,16 @@ API authentication requirements
 Requests towards the OCDB API require an authentication. The required access token can be aquired with the following HTTP request:
 
 ```sh
-curl -s -k -X GET "https://$HOST:$PORT/v1/users?a=$SHA1USEROREMAIL&b=$SHA1PASSWORD" -H "Accept: application/json
+curl -s -k -X GET "https://$HOST:$PORT/v1/users?a=$SHA1USEROREMAIL&b=$SHA1PASSWORD" -H "Accept: application/json"
 ```
 
+Where the environment variables have the following meaning
+* *$HOST*: the host of the OCDB instance
+* *$PORT*: the port
+* *$SHA1USEROREMAIL*: SHA1 hashed user name or email
+* *$SHA1PASSWORD*: SHA1 hashed password
+
+Neaturally, the account must exists in advance to make the access token request a success.
 For more information see the [API documentation](http://fraunhoferfokus.github.io/OCDB/apiconsole/index.html).
 
 API usage and JavaScript abstraction

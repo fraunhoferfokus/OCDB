@@ -8,8 +8,6 @@ info:
 # array of all schemes that the OCDB API supports
 schemes:
   - https
-host:
- localhost
 # will be prefixed to all paths
 basePath: /v1
 produces:
